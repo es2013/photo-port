@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Nav from "./components/Nav";
 import About from "./components/About";
 import Gallery from "./components/Gallery";
+import ContactForm from "./components/Contact";
+
 
 //lift state to App.js and pass the current category and its setter through to Nav
 function App() {
@@ -14,23 +16,33 @@ function App() {
     { name: 'food', description: 'Delicious delicacies' },
     { name: 'landscape', description: 'Fields, farmhouses, waterfalls, and the beauty of nature' },
   ]);
+  // = useState is the initial value that we are selecting for state
 
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
-
+  const [contactSelected, setContactSelected] = useState(false);
 
 // function component that returns an element using jsx
 return (
   <div>
-    <Nav
-      categories={categories}
-      setCurrentCategory={setCurrentCategory}
-      currentCategory={currentCategory}
-    ></Nav>
+    {/* passing contactSelected (getter) and setContactSelected (setter) to component as props */}
+  <Nav
+    categories={categories}
+    setCurrentCategory={setCurrentCategory}
+    currentCategory={currentCategory}
+    contactSelected={contactSelected}
+    setContactSelected={setContactSelected}
+  ></Nav>
     <main>
-      <div>
-      <Gallery currentCategory={currentCategory}></Gallery>
+      {/* //similar to if(!nontactSelected) */}
+    {!contactSelected ? (
+      // everything between <> is a react fragment
+      <>
+        <Gallery currentCategory={currentCategory}></Gallery>
         <About></About>
-      </div>
+      </>
+    ) : (
+        <ContactForm></ContactForm>
+      )}
     </main>
   </div>
 );
